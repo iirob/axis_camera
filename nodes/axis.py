@@ -63,7 +63,7 @@ class StreamThread(threading.Thread):
             return(True)
         except urllib2.URLError, e:
             rospy.logwarn('Error opening URL %s' % (self.url) +
-                            'Possible timeout.  Looping until camera appears')
+                            ' Possible timeout.  Looping until camera appears')
             return(False)
 
     def publishFramesContinuously(self):
@@ -148,8 +148,8 @@ class Axis:
                                                    url = self.camera_info_url)
         self.cinfo.loadCameraInfo()         # required before getCameraInfo()
         self.st = None
-        self.pub = rospy.Publisher("image_raw/compressed", CompressedImage, self)
-        self.caminfo_pub = rospy.Publisher("camera_info", CameraInfo, self)
+        self.pub = rospy.Publisher("image_raw/compressed", CompressedImage, self, queue_size=1)
+        self.caminfo_pub = rospy.Publisher("camera_info", CameraInfo, self, queue_size=1)
 
     def __str__(self):
         """Return string representation."""
@@ -169,7 +169,7 @@ def main():
     arg_defaults = {
         'hostname': '192.168.0.90',       # default IP address
         'username': 'root',               # default login name
-        'password': '',
+        'password': 'iirob',
         'width': 640,
         'height': 480,
         'frame_id': 'axis_camera',
